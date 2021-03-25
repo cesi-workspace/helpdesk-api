@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<ruleset name="Kernel">
+    <description>Règles de formatage du Kernel</description>
+
+    <arg name="colors" />
+    <arg value="p" />
+
+    <file>src</file>
+    <file>tests</file>
+    <file>public/index.php</file>
+
+    <rule ref="PSR12"/>
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+</ruleset>
