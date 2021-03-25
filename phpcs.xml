@@ -5,9 +5,9 @@
     <arg name="colors" />
     <arg value="p" />
 
+    <file>app</file>
     <file>src</file>
     <file>tests</file>
-    <file>public/index.php</file>
 
     <rule ref="PSR12"/>
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
