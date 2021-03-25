@@ -2,25 +2,40 @@
 
 namespace Kernel;
 
-use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use App\Config\KernelConfig;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Generic class to manage the app
+ * @package Kernel
+ */
 class App
 {
 
-    public function run(ServerRequestInterface $request): ResponseInterface
-    {
-        $uri = $request->getUri()->getPath();
-        $response = new Response();
-        if (!empty($uri) && $uri[-1] === "/") {
-            $response = $response
-                ->withStatus(301)
-                ->withHeader('Location', substr($uri, 0, -1));
-        } else {
-            $response->getBody()->write('Bonjour');
-        }
+    /**
+     * @var KernelConfig
+     */
+    private KernelConfig $kernelConfig;
 
-        return $response;
+    /**
+     * @var Router
+     */
+    private Router $router;
+
+    public function __construct()
+    {
+        $this->kernelConfig = new KernelConfig();
+        $this->router = new Router();
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function run(Request $request): Response
+    {
+        $this->router->fetchRoutes($this->kernelConfig->getRoutes());
+        return new Response();
     }
 }
