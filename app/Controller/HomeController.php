@@ -2,17 +2,17 @@
 
 namespace App\Controller;
 
+use Kernel\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomeController
+class HomeController extends AbstractController
 {
 
     /**
      * @Route("/blog", name="blog_list", methods={"GET"})
      */
-    public function index(Request $request)
+    public function index()
     {
         return new JsonResponse(['body' => ['test' => true]], 400);
     }
