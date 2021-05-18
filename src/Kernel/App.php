@@ -36,11 +36,12 @@ class App
      */
     public function run(Request $request): Response
     {
-        $this->router->fetchRoutes($this->kernelConfig->getRoutes());
+        $this->router->fetchRoutes(__DIR__ . "/../../app/Controller");
         $route = $this->router->match($request);
-        $controller = $route['controller'];
+        $controllerClass = $route['controller'];
         $action = $route['action'];
 
-        return (new $controller())->$action($request);
+        $controller = new $controllerClass($request);
+        return $controller->$action();
     }
 }

@@ -27,11 +27,11 @@ class Router
      * Fetch all routes through the app
      * @param array $routeCollectionList
      */
-    public function fetchRoutes(array $routeCollectionList)
+    public function fetchRoutes(string $directory)
     {
         $routeLoader = new RouteAnnotationClassLoader(new AnnotationReader());
         $loader = new AnnotationDirectoryLoader(new FileLocator(), $routeLoader);
-        $collections = $loader->load(__DIR__ . "/../../../app/Controller");
+        $collections = $loader->load($directory);
         $this->masterRoutes->addCollection($collections);
     }
 
