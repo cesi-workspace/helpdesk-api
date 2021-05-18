@@ -2,46 +2,43 @@
 
 namespace Tests\Kernel;
 
-use Kernel\Router;
+use Kernel\Router\Router;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Tests\Config\KernelConfig;
 
 class RouterTest extends TestCase
 {
-
-    public function testGetHomeRoute()
+    public function testTestGetRoute()
     {
-        $request = Request::create("/");
-        $kernelConfig = new KernelConfig();
+        $request = Request::create("/test");
 
         $router = new Router();
-        $router->fetchRoutes($kernelConfig->getRoutes());
-        $parameters = $router->match($request);
+        $router->fetchRoutes(__DIR__ . "/../Controller");
+        $route = $router->match($request);
 
-        $this->assertNotNull($parameters);
+        $this->assertNotNull($route);
+
+        $controllerClass = $route['controller'];
+        $action = $route['action'];
+
+        $controller = new $controllerClass($request);
+        /** @var JsonResponse $response */ // IDE auto completion
+        $response = $controller->$action();
+
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function testPostHomeRoute()
-    {
-        $request = Request::create("/", "POST");
-        $kernelConfig = new KernelConfig();
-
-        $router = new Router();
-        $router->fetchRoutes($kernelConfig->getRoutes());
-        $parameters = $router->match($request);
-
-        $this->assertNotNull($parameters);
-    }
 
     public function testGet404()
     {
-        $request = Request::create("/fff");
-        $kernelConfig = new KernelConfig();
+        $request = Request::create("/" . uniqid());
 
         $router = new Router();
-        $router->fetchRoutes($kernelConfig->getRoutes());
+        $router->fetchRoutes(__DIR__ . "/../Controller");
         $this->expectException(ResourceNotFoundException::class);
         $router->match($request);
     }
