@@ -3,6 +3,7 @@
 namespace Kernel;
 
 use App\Config\KernelConfig;
+use Kernel\Router\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -36,6 +37,10 @@ class App
     public function run(Request $request): Response
     {
         $this->router->fetchRoutes($this->kernelConfig->getRoutes());
-        return new Response();
+        $route = $this->router->match($request);
+        $controller = $route['controller'];
+        $action = $route['action'];
+
+        return (new $controller())->$action($request);
     }
 }
