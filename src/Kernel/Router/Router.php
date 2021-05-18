@@ -1,8 +1,11 @@
 <?php
 
-namespace Kernel;
+namespace Kernel\Router;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Loader\AnnotationDirectoryLoader;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
@@ -26,13 +29,10 @@ class Router
      */
     public function fetchRoutes(array $routeCollectionList)
     {
-        foreach ($routeCollectionList as $routeCollection) {
-            $routes = (new $routeCollection())->all();
-
-            foreach ($routes as $name => $route) {
-                $this->masterRoutes->add($name, $route);
-            }
-        }
+        $routeLoader = new RouteAnnotationClassLoader(new AnnotationReader());
+        $loader = new AnnotationDirectoryLoader(new FileLocator(), $routeLoader);
+        $collections = $loader->load(__DIR__ . "/../../../app/Controller");
+        $this->masterRoutes->addCollection($collections);
     }
 
     /**
