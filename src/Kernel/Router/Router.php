@@ -23,10 +23,6 @@ class Router
         $this->masterRoutes = new RouteCollection();
     }
 
-    /**
-     * Fetch all routes through the app
-     * @param array $routeCollectionList
-     */
     public function fetchRoutes(string $directory)
     {
         $routeLoader = new RouteAnnotationClassLoader(new AnnotationReader());
@@ -35,11 +31,6 @@ class Router
         $this->masterRoutes->addCollection($collections);
     }
 
-    /**
-     * Match request
-     * @param Request $request
-     * @return array|null
-     */
     public function match(Request $request): ?array
     {
         $requestContext = new RequestContext();
