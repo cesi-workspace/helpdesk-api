@@ -12,7 +12,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/blog", name="blog_list", methods={"GET"})
      */
-    public function index()
+    public function index(): JsonResponse
     {
         return new JsonResponse(['body' => ['test' => true]], 400);
     }
