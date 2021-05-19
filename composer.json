@@ -23,6 +23,7 @@
         "symfony/routing": "^5.2",
         "symfony/http-foundation": "^5.2",
         "symfony/config": "^5.2",
-        "doctrine/common": "^3.1"
+        "doctrine/common": "^3.1",
+        "php-di/php-di": "^6.3"
     }
 }

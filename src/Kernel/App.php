@@ -4,36 +4,23 @@ namespace Kernel;
 
 use App\Config\KernelConfig;
 use Kernel\Router\Router;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Generic class to manage the app
- * @package Kernel
- */
 class App
 {
 
-    /**
-     * @var KernelConfig
-     */
-    private KernelConfig $kernelConfig;
+    private ContainerInterface $container;
 
-    /**
-     * @var Router
-     */
     private Router $router;
 
-    public function __construct()
+    public function __construct(ContainerInterface $container)
     {
-        $this->kernelConfig = new KernelConfig();
-        $this->router = new Router();
+        $this->container = $container;
+        $this->router = $container->get(Router::class);
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
     public function run(Request $request): Response
     {
         $this->router->fetchRoutes(__DIR__ . "/../../app/Controller");
