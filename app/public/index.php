@@ -4,7 +4,7 @@ use DI\ContainerBuilder;
 use Kernel\App;
 use Symfony\Component\HttpFoundation\Request;
 
-require '../../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 $containerBuilder = new ContainerBuilder();
 $containerBuilder->addDefinitions(dirname(__DIR__) . "/../config/config.php");
