@@ -2,7 +2,6 @@
 
 namespace Kernel;
 
-use App\Config\KernelConfig;
 use Kernel\Router\Router;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
