@@ -8,6 +8,12 @@
             "email": "lucas.mercier@viacesi.fr"
         }
     ],
+    "scripts": {
+        "tests": [
+            "vendor/bin/phpcs",
+            "vendor/bin/phpunit"
+        ]
+    },
     "autoload": {
         "psr-4": {
             "App\\": "app",
