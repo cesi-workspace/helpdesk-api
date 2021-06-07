@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Tests\Config\KernelConfig;
 
 class RouterTest extends TestCase
 {
