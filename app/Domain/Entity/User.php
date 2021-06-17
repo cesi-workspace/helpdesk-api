@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
 
 /**
- * @Entity
+ * @Entity(repositoryClass="App\Database\Repository\UserRepository")
  * @Table(name="users")
  */
 class User
