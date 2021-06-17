@@ -2,7 +2,6 @@
 
 namespace App\Application\UseCase\ListTicket;
 
-use App\Application\UseCase\ListTicket\ListTicketResponse;
 use Kernel\Layer\Presentation\Presenter;
 use Kernel\Layer\Presentation\ViewModel;
 
