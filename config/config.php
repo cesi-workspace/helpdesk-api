@@ -14,9 +14,10 @@ return [
         dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "Domain" . DIRECTORY_SEPARATOR . "Entity"
     ],
     "db" => [
+        "host" => env("db.host", "92.222.36.213"),
         "driver" => env("db.driver", "pdo_mysql"),
-        "user" => env("db.username", "root"),
-        "password" => env("db.password", ""),
+        "user" => env("db.username", "cesi"),
+        "password" => env("db.password", "cesi"),
         "dbname" => env("db.name", "cesi")
     ],
     Configuration::class => factory([Setup::class, 'createAnnotationMetadataConfiguration'])
