@@ -1,9 +1,12 @@
 <?php
 
+use App\Application\Service\TicketService;
+use App\Domain\Service\ITicketService;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 
+use function DI\create;
 use function DI\env;
 use function DI\factory;
 use function DI\get;
@@ -26,4 +29,5 @@ return [
     EntityManager::class => factory([EntityManager::class, 'create'])
         ->parameter('connection', get('db'))
         ->parameter('config', get(Configuration::class)),
+    ITicketService::class => create(TicketService::class)
 ];
