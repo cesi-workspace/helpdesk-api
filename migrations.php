@@ -10,7 +10,7 @@ return [
     ],
 
     'migrations_paths' => [
-        'App\Migration' => dirname(__FILE__) . '/app/Database/Migration',
+        'App\Database\Migration' => dirname(__FILE__) . '/app/Database/Migration',
     ],
 
     'all_or_nothing' => true,
