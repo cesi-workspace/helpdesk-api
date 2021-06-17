@@ -10,7 +10,9 @@ use function DI\get;
 
 return [
     "env" => env("env", "development"),
-    "path.entities" => [ dirname(__DIR__) . "/app/Entity" ],
+    "path.entities" => [
+        dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "Domain" . DIRECTORY_SEPARATOR . "Entity"
+    ],
     "db" => [
         "driver" => env("db.driver", "pdo_mysql"),
         "user" => env("db.username", "root"),
