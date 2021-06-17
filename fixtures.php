@@ -15,8 +15,7 @@ $container = $containerBuilder->build();
 $entityManager = $container->get(EntityManager::class);
 
 $loader = new Loader();
-$loader->loadFromFile(dirname(__FILE__) . "/app/Database/Fixture/CreateAdminFixture.php");
-//$loader->loadFromDirectory(dirname(__FILE__) . "/app/Database/Fixture");
+$loader->loadFromDirectory(dirname(__FILE__) . "/app/Database/Fixture");
 
 $purger = new ORMPurger();
 $executor = new ORMExecutor($entityManager, $purger);
