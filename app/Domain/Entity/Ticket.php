@@ -107,4 +107,12 @@ class Ticket
     {
         return $this->user;
     }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
+    }
 }
