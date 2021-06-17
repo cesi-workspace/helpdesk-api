@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controller;
+namespace App\Application\Controller;
 
-use App\UseCase\ListTicket\ListTicket;
-use App\UseCase\ListTicket\ListTicketPresenter;
-use App\UseCase\ListTicket\ListTicketRequest;
+use App\Application\UseCase\ListTicket\ListTicket;
+use App\Application\UseCase\ListTicket\ListTicketPresenter;
+use App\Application\UseCase\ListTicket\ListTicketRequest;
 use Kernel\AbstractController;
 use Kernel\Layer\Presentation\JsonView;
 use Kernel\RequestAdapter;

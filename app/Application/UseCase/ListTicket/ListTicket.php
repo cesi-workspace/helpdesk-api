@@ -1,8 +1,9 @@
 <?php
 
-namespace App\UseCase\ListTicket;
+namespace App\Application\UseCase\ListTicket;
 
 use App\Domain\Entity\Ticket;
+use App\Application\UseCase\ListTicket\ListTicketResponse;
 use Doctrine\ORM\EntityManager;
 use Kernel\App;
 use Kernel\Layer\Domain\UseCase;

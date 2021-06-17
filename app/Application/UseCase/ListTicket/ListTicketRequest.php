@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UseCase\ListTicket;
+namespace App\Application\UseCase\ListTicket;
 
 class ListTicketRequest
 {

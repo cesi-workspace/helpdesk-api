@@ -23,7 +23,7 @@ class App
     public function run(Request $request): Response
     {
         $router = self::$container->get(Router::class);
-        $router->fetchRoutes(__DIR__ . "/../../app/Controller");
+        $router->fetchRoutes(__DIR__ . "/../../app/Application/Controller");
         $route = $router->match($request);
         $controllerClass = $route["controller"];
         $action = $route["action"];
