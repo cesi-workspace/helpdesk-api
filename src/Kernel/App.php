@@ -2,40 +2,59 @@
 
 namespace Kernel;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Query\ResultSetMapping;
+use DI\Container;
 use Kernel\Router\Router;
-use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+use function DI\create;
 
 class App
 {
 
-    private ContainerInterface $container;
+    private static Container $container;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(Container $container)
     {
-        $this->container = $container;
+        self::$container = $container;
     }
 
     public function run(Request $request): Response
     {
-        $router = $this->container->get(Router::class);
+        $router = self::$container->get(Router::class);
         $router->fetchRoutes(__DIR__ . "/../../app/Controller");
         $route = $router->match($request);
         $controllerClass = $route["controller"];
         $action = $route["action"];
 
-        $controller = new $controllerClass($request);
-        return $controller->$action();
+        /** @var Route $annotation */
+        $annotation = $route["annotation"];
+        preg_match_all("{(\w+)}", $annotation->getPath(), $parametersName);
+        $parametersName = array_slice($parametersName, 1, sizeof($parametersName))[0];
+        $parameters = [];
+        foreach ($parametersName as $parameterName) {
+            $parameters[$parameterName] = $route[$parameterName] ?? "";
+        }
+
+        $controller = new $controllerClass();
+        self::$container->set(Request::class, $request);
+
+        self::$container
+            ->set(
+                RequestAdapter::class,
+                create(RequestAdapter::class)
+                    ->constructor($request, $parameters)
+            );
+
+        return self::$container->call([$controller, $action]);
     }
 
     /**
-     * @return ContainerInterface
+     * @return Container
      */
-    public function getContainer(): ContainerInterface
+    public static function getContainer(): Container
     {
-        return $this->container;
+        return self::$container;
     }
 }
