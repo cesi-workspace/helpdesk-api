@@ -14,7 +14,8 @@
             "vendor/bin/phpcs",
             "vendor/bin/phpunit"
         ],
-        "migration": "php ./vendor/bin/doctrine-migrations"
+        "migration": "php ./vendor/bin/doctrine-migrations",
+        "fixtures": "php fixtures.php"
     },
     "autoload": {
         "psr-4": {
