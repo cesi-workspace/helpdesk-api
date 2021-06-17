@@ -11,13 +11,13 @@ use Kernel\RequestAdapter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomeController extends AbstractController
+class TicketController extends AbstractController
 {
 
     /**
-     * @Route("/{limit}", name="blog_list", methods={"GET"}, requirements={"limit"="\d+"})
+     * @Route("/tickets/{limit}", name="blog_list", methods={"GET"}, requirements={"limit"="\d+"})
      */
-    public function index(RequestAdapter $request): JsonResponse
+    public function listTicket(RequestAdapter $request): JsonResponse
     {
         $listTicketRequest = new ListTicketRequest($request->getParameters()["limit"]);
         $listTicketPresenter = new ListTicketPresenter();
