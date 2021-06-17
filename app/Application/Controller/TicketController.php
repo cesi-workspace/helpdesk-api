@@ -2,6 +2,9 @@
 
 namespace App\Application\Controller;
 
+use App\Application\UseCase\DeleteTicket\DeleteTicket;
+use App\Application\UseCase\DeleteTicket\DeleteTicketPresenter;
+use App\Application\UseCase\DeleteTicket\DeleteTicketRequest;
 use App\Application\UseCase\ListTicket\ListTicket;
 use App\Application\UseCase\ListTicket\ListTicketPresenter;
 use App\Application\UseCase\ListTicket\ListTicketRequest;
@@ -45,5 +48,20 @@ class TicketController extends AbstractController
 
         $listTicket->execute($listTicketRequest, $listTicketPresenter);
         return $jsonView->generate($listTicketPresenter->viewModel());
+    }
+
+    /**
+     * @Route("/ticket/{id}", name="ticket_delete", methods={"DELETE"}, requirements={"id"="\d+"})
+     */
+    public function deleteTicket(RequestAdapter $request): JsonResponse
+    {
+        $deleteTicketRequest = new DeleteTicketRequest($request->getParameters()["id"]);
+        $deleteTicketPresenter = new DeleteTicketPresenter();
+
+        $jsonView = new JsonView();
+        $deleteTicket = new DeleteTicket();
+
+        $deleteTicket->execute($deleteTicketRequest, $deleteTicketPresenter);
+        return $jsonView->generate($deleteTicketPresenter->viewModel());
     }
 }
