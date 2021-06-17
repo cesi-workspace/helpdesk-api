@@ -11,4 +11,15 @@ class TicketRepository extends EntityRepository implements ITicketRepository
     {
         return $this->findBy([], [], $limit);
     }
+
+    public function delete(int $id): bool
+    {
+        $queryBuilder = $this
+            ->createQueryBuilder('ticket')
+            ->delete()
+            ->where("ticket.id = :id")
+            ->setParameter("id", $id);
+
+        return $queryBuilder->getQuery()->execute();
+    }
 }
