@@ -34,4 +34,13 @@ class TicketService implements ITicketService
 
         return json_decode($serializer->serialize($ticketRepository->findOneBy(['id' => $id]), 'json'));
     }
+
+    public function deleteTicket(int $id): bool
+    {
+        $container = App::getContainer();
+        $entityManager = $container->get(EntityManager::class);
+        /** @var TicketRepository $ticketRepository */
+        $ticketRepository = $entityManager->getRepository(Ticket::class);
+        return $ticketRepository->delete($id);
+    }
 }
