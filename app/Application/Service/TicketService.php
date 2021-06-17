@@ -43,4 +43,32 @@ class TicketService implements ITicketService
         $ticketRepository = $entityManager->getRepository(Ticket::class);
         return $ticketRepository->delete($id);
     }
+
+    public function updateTicket(int $id, mixed $ticket)
+    {
+        $container = App::getContainer();
+        $entityManager = $container->get(EntityManager::class);
+        /** @var TicketRepository $ticketRepository */
+        $ticketRepository = $entityManager->getRepository(Ticket::class);
+        /** @var Ticket $ticketEntity */
+        $ticketEntity = $ticketRepository->findOneBy(["id" => $id]);
+
+        if ($ticketEntity == null) {
+            return null;
+        }
+
+        if (isset($ticket->title)) {
+            $ticketEntity->setTitle($ticket->title);
+        }
+
+        if (isset($ticket->description)) {
+            $ticketEntity->setDescription($ticket->description);
+        }
+
+        $entityManager->persist($ticketEntity);
+        $entityManager->flush();
+
+        $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
+        return json_decode($serializer->serialize($ticketEntity, 'json'));
+    }
 }

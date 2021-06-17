@@ -11,6 +11,9 @@ use App\Application\UseCase\ListTicket\ListTicketRequest;
 use App\Application\UseCase\ShowTicket\ShowTicket;
 use App\Application\UseCase\ShowTicket\ShowTicketPresenter;
 use App\Application\UseCase\ShowTicket\ShowTicketRequest;
+use App\Application\UseCase\UpdateTicket\UpdateTicket;
+use App\Application\UseCase\UpdateTicket\UpdateTicketPresenter;
+use App\Application\UseCase\UpdateTicket\UpdateTicketRequest;
 use Kernel\AbstractController;
 use Kernel\Layer\Presentation\JsonView;
 use Kernel\RequestAdapter;
@@ -63,5 +66,23 @@ class TicketController extends AbstractController
 
         $deleteTicket->execute($deleteTicketRequest, $deleteTicketPresenter);
         return $jsonView->generate($deleteTicketPresenter->viewModel());
+    }
+
+    /**
+     * @Route("/ticket/{id}", name="ticket_update", methods={"PUT"}, requirements={"id"="\d+"})
+     */
+    public function updateTicket(RequestAdapter $request): JsonResponse
+    {
+        $updateTicketRequest = new UpdateTicketRequest(
+            $request->getParameters()["id"],
+            json_decode($request->getRequest()->getContent())
+        );
+        $updateTicketPresenter = new UpdateTicketPresenter();
+
+        $jsonView = new JsonView();
+        $updateTicket = new UpdateTicket();
+
+        $updateTicket->execute($updateTicketRequest, $updateTicketPresenter);
+        return $jsonView->generate($updateTicketPresenter->viewModel());
     }
 }
